@@ -273,8 +273,37 @@ __webpack_require__.r(__webpack_exports__);
           alignment: align || "left"
         });
       }
+    }, {
+      type: "enter",
+      regExp: /text|textbox|text box/i,
+      transform: () => {
+        return (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__.createBlock)("sp-blocks/blockplugin", {
+          shadow: true
+        });
+      }
+    }, {
+      type: "prefix",
+      prefix: "textbox",
+      transform: () => {
+        return (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__.createBlock)("sp-blocks/blockplugin", {});
+      }
     }],
-    to: []
+    to: [{
+      type: "block",
+      blocks: ["core/paragraph"],
+      isMatch: ({
+        text
+      }) => {
+        return text ? true : false;
+      },
+      transform: attributes => {
+        return (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__.createBlock)("core/paragraph", {
+          content: attributes.text,
+          align: attributes.alignment,
+          backgroundColor: attributes.backgroundColor
+        });
+      }
+    }]
   }
 });
 

@@ -29,7 +29,38 @@ registerBlockType(metadata.name, {
                     });
                 },
             },
+            {
+                type: "enter",
+                regExp: /text|textbox|text box/i,
+                transform: () => {
+                    return createBlock("sp-blocks/blockplugin", {
+                        shadow: true,
+                    });
+                },
+            },
+            {
+                type: "prefix",
+                prefix: "textbox",
+                transform: () => {
+                    return createBlock("sp-blocks/blockplugin", {});
+                },
+            },
         ],
-        to: [],
+        to: [
+            {
+                type: "block",
+                blocks: ["core/paragraph"],
+                isMatch: ({ text }) => {
+                    return text ? true : false;
+                },
+                transform: (attributes) => {
+                    return createBlock("core/paragraph", {
+                        content: attributes.text,
+                        align: attributes.alignment,
+                        backgroundColor: attributes.backgroundColor,
+                    });
+                },
+            },
+        ],
     },
 });
