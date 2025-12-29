@@ -39,8 +39,7 @@
     "example": {
         "attributes": {
             "text": "This is some text",
-            "gradient": "linear-gradient(135deg, rgb(238, 172, 255) 0%, rgba(26, 26, 26, 0.19) 49%, rgb(53, 242, 255) 100%)",
-            "shadow": true
+            "alignment": "center"
         }
     },
     "attributes": {
