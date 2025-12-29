@@ -1,4 +1,22 @@
 .wp-block-sp-blocks-blockplugin {
+    &.has-shadow {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+        &.has-shadow-10 {
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        &.has-shadow-20 {
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+        }
+        &.has-shadow-30 {
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+        }
+        &.has-shadow-40 {
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.4);
+        }
+        &.has-shadow-50 {
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
+        }
+    }
     &.text-box-align-left {
         text-align: left;
     }
@@ -8,4 +26,55 @@
     &.text-box-align-right {
         text-align: right;
     }
+
+    &.block-align-none {
+        max-width: var(--wp--style--global--content-size, 720px);
+    }
+
+    &.block-align-wide {
+        margin-left: auto !important;
+        margin-right: auto !important;
+        max-width: var(--wp--style--global--wide-size, 1200px);
+    }
+
+    &.block-align-full {
+        width: 100%;
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+    &.block-align-left {
+        display: block !important;
+        float: left;
+        margin-inline-start: 0;
+        margin-inline-end: 2em;
+        margin-right: 20px !important;
+    }
+    &.block-align-center {
+        display: block !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+    &.block-align-right {
+        display: block !important;
+        float: right;
+        margin-inline-start: 2em;
+        margin-inline-end: 0;
+        margin-left: 20px !important;
+    }
+
+    &.is-style-squared {
+        border-radius: 0;
+    }
+    &.is-style-rounded {
+        border-radius: 10px;
+    }
+    &.is-style-circle {
+        border-radius: 50px;
+    }
+}
+
+.block-parent-left-right::after {
+    content: "";
+    display: table;
+    clear: both;
 }

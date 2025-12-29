@@ -13,7 +13,34 @@
         "html": false,
         "color": {
             "text": true,
-            "background": true
+            "background": true,
+            "gradients": true
+        },
+        "spacing": {
+            "padding": true,
+            "margin": true
+        }
+    },
+    "styles": [
+        {
+            "name": "squared",
+            "label": "Squared",
+            "isDefault": true
+        },
+        {
+            "name": "rounded",
+            "label": "Rounded"
+        },
+        {
+            "name": "circle",
+            "label": "Circle"
+        }
+    ],
+    "example": {
+        "attributes": {
+            "text": "This is some text",
+            "gradient": "linear-gradient(135deg, rgb(238, 172, 255) 0%, rgba(26, 26, 26, 0.19) 49%, rgb(53, 242, 255) 100%)",
+            "shadow": true
         }
     },
     "attributes": {
@@ -26,11 +53,31 @@
             "type": "string",
             "default": "left"
         },
-        "backgroundColor": {
-            "type": "string"
+        "blockAlignment": {
+            "type": "string",
+            "default": "none"
         },
-        "textColor": {
-            "type": "string"
+        "shadow": {
+            "type": "boolean",
+            "default": false
+        },
+        "shadowOpacity": {
+            "type": "number",
+            "default": 30
+        },
+
+        "style": {
+            "type": "object",
+            "default": {
+                "color": {
+                    "background": "#D1D0EA",
+                    "text": "#111111"
+                },
+                "spacing": {
+                    "padding": "10px",
+                    "margin": "20px"
+                }
+            }
         }
     }
 }

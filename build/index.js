@@ -1,5 +1,4 @@
 /******/ (() => { // webpackBootstrap
-/******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
 /***/ "./block.json"
@@ -8,7 +7,95 @@
   \********************/
 (module) {
 
-module.exports = /*#__PURE__*/JSON.parse('{"apiVersion":2,"name":"sp-blocks/blockplugin","title":"Block Plugin","description":"My Block plugin test","category":"text","icon":"buddicons-replies","textdomain":"sp-block-plugin","editorScript":"file:./build/index.js","style":"file:./build/style-index.css","editorStyle":"file:./build/index.css","supports":{"html":false,"color":{"text":true,"background":true}},"attributes":{"text":{"type":"string","source":"html","selector":"h4"},"alignment":{"type":"string","default":"left"},"backgroundColor":{"type":"string"},"textColor":{"type":"string"}}}');
+"use strict";
+module.exports = /*#__PURE__*/JSON.parse('{"apiVersion":2,"name":"sp-blocks/blockplugin","title":"Block Plugin","description":"My Block plugin test","category":"text","icon":"buddicons-replies","textdomain":"sp-block-plugin","editorScript":"file:./build/index.js","style":"file:./build/style-index.css","editorStyle":"file:./build/index.css","supports":{"html":false,"color":{"text":true,"background":true,"gradients":true},"spacing":{"padding":true,"margin":true}},"styles":[{"name":"squared","label":"Squared","isDefault":true},{"name":"rounded","label":"Rounded"},{"name":"circle","label":"Circle"}],"example":{"attributes":{"text":"This is some text","gradient":"linear-gradient(135deg, rgb(238, 172, 255) 0%, rgba(26, 26, 26, 0.19) 49%, rgb(53, 242, 255) 100%)","shadow":true}},"attributes":{"text":{"type":"string","source":"html","selector":"h4"},"alignment":{"type":"string","default":"left"},"blockAlignment":{"type":"string","default":"none"},"shadow":{"type":"boolean","default":false},"shadowOpacity":{"type":"number","default":30},"style":{"type":"object","default":{"color":{"background":"#D1D0EA","text":"#111111"},"spacing":{"padding":"10px","margin":"20px"}}}}}');
+
+/***/ },
+
+/***/ "./node_modules/classnames/index.js"
+/*!******************************************!*\
+  !*** ./node_modules/classnames/index.js ***!
+  \******************************************/
+(module, exports) {
+
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
+	Copyright (c) 2018 Jed Watson.
+	Licensed under the MIT License (MIT), see
+	http://jedwatson.github.io/classnames
+*/
+/* global define */
+
+(function () {
+	'use strict';
+
+	var hasOwn = {}.hasOwnProperty;
+
+	function classNames () {
+		var classes = '';
+
+		for (var i = 0; i < arguments.length; i++) {
+			var arg = arguments[i];
+			if (arg) {
+				classes = appendClass(classes, parseValue(arg));
+			}
+		}
+
+		return classes;
+	}
+
+	function parseValue (arg) {
+		if (typeof arg === 'string' || typeof arg === 'number') {
+			return arg;
+		}
+
+		if (typeof arg !== 'object') {
+			return '';
+		}
+
+		if (Array.isArray(arg)) {
+			return classNames.apply(null, arg);
+		}
+
+		if (arg.toString !== Object.prototype.toString && !arg.toString.toString().includes('[native code]')) {
+			return arg.toString();
+		}
+
+		var classes = '';
+
+		for (var key in arg) {
+			if (hasOwn.call(arg, key) && arg[key]) {
+				classes = appendClass(classes, key);
+			}
+		}
+
+		return classes;
+	}
+
+	function appendClass (value, newClass) {
+		if (!newClass) {
+			return value;
+		}
+	
+		if (value) {
+			return value + ' ' + newClass;
+		}
+	
+		return value + newClass;
+	}
+
+	if ( true && module.exports) {
+		classNames.default = classNames;
+		module.exports = classNames;
+	} else if (true) {
+		// register as 'classnames', consistent with npm package name
+		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = (function () {
+			return classNames;
+		}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	} else // removed by dead control flow
+{}
+}());
+
 
 /***/ },
 
@@ -18,6 +105,7 @@ module.exports = /*#__PURE__*/JSON.parse('{"apiVersion":2,"name":"sp-blocks/bloc
   \*********************/
 (__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   __i8n: () => (/* binding */ __i8n),
@@ -26,7 +114,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
-/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./editor.scss */ "./src/editor.scss");
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./editor.scss */ "./src/editor.scss");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+
+
 
 
 
@@ -42,9 +134,17 @@ function edit({
   const {
     text,
     alignment,
+    blockAlignment,
     backgroundColor,
-    textColor
+    textColor,
+    shadow,
+    shadowOpacity
   } = attributes;
+  const classes = classnames__WEBPACK_IMPORTED_MODULE_3__(`text-box-align-${alignment}`, {
+    "has-shadow": shadow,
+    [`has-shadow-${shadowOpacity}`]: shadow && shadowOpacity,
+    [`block-align-${blockAlignment}`]: blockAlignment
+  });
   const onChangeText = newText => {
     setAttributes({
       text: newText
@@ -55,45 +155,60 @@ function edit({
       alignment: newAlign
     });
   };
-  const onBackgroundChange = newBgColor => {
+
+  // const onBackgroundChange = (newBgColor) => {
+  //     setAttributes({ backgroundColor: newBgColor });
+  // };
+  // const onTextColorChange = (newTextColor) => {
+  //     setAttributes({ textColor: newTextColor });
+  // };
+
+  const onChangeShadowOpacity = newOpacity => {
     setAttributes({
-      backgroundColor: newBgColor
+      shadowOpacity: newOpacity
     });
   };
-  const onTextColorChange = newTextColor => {
+  const toggleShadow = () => {
     setAttributes({
-      textColor: newTextColor
+      shadow: !shadow
+    });
+  };
+  const onChangeBlockAlign = newBlockAlign => {
+    setAttributes({
+      blockAlignment: newBlockAlign
     });
   };
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    ...(0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps)()
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.InspectorControls, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.PanelColorSettings, {
-    title: __i8n("Color setting"),
-    colorSettings: [{
-      value: backgroundColor,
-      onChange: onBackgroundChange,
-      label: __i8n("Background Color")
-    }, {
-      value: textColor,
-      onChange: onTextColorChange,
-      label: __i8n("Text Color")
+    className: blockAlignment === "left" || blockAlignment === "right" ? "block-parent-left-right" : ""
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.InspectorControls, null, shadow && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.PanelBody, {
+    title: __i8n("Shadow Setting")
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.RangeControl, {
+    label: __i8n("Shadow Opacity"),
+    value: shadowOpacity,
+    min: 10,
+    max: 50,
+    step: 10,
+    onChange: onChangeShadowOpacity
+  }))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.BlockControls, {
+    controls: [{
+      title: __i8n("Shadow"),
+      icon: "admin-page",
+      onClick: toggleShadow,
+      isActive: shadow
     }]
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.ContrastChecker, {
-    textColor: textColor,
-    backgroundColor: backgroundColor
-  }))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.BlockControls, null, text && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.AlignmentToolbar, {
+  }, text && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.AlignmentToolbar, {
     value: alignment,
     onChange: onChangeAlign
-  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.BlockAlignmentToolbar, null))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText, {
+  })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.BlockAlignmentToolbar, {
+    controls: ['wide', 'full', 'center'],
+    value: blockAlignment,
+    onChange: onChangeBlockAlign
+  })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText, {
     ...(0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps)({
-      className: `text-box-align-${alignment}`,
-      style: {
-        backgroundColor,
-        color: textColor
-      }
+      className: classes
     }),
     placeholder: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)("Hello from edit", "sp-block-plugin"),
-    tagName: "h3",
+    tagName: "h4",
     value: text,
     onChange: onChangeText
   }));
@@ -107,6 +222,7 @@ function edit({
   \*************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 // extracted by mini-css-extract-plugin
 
@@ -119,6 +235,7 @@ __webpack_require__.r(__webpack_exports__);
   \**********************/
 (__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/blocks */ "@wordpress/blocks");
 /* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./style.scss */ "./src/style.scss");
@@ -133,7 +250,32 @@ __webpack_require__.r(__webpack_exports__);
 (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__.registerBlockType)(_block_json__WEBPACK_IMPORTED_MODULE_4__.name, {
   title: "Block Plugin",
   edit: _edit_js__WEBPACK_IMPORTED_MODULE_2__["default"],
-  save: _save_js__WEBPACK_IMPORTED_MODULE_3__["default"]
+  save: _save_js__WEBPACK_IMPORTED_MODULE_3__["default"],
+  variations: [{
+    name: "shadow-text-box",
+    title: "Shadow Text Box",
+    attributes: {
+      shadow: true
+    }
+  }],
+  transforms: {
+    from: [{
+      type: "block",
+      blocks: ["core/paragraph"],
+      transform: ({
+        content: {
+          text
+        },
+        align
+      }) => {
+        return (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__.createBlock)("sp-blocks/blockplugin", {
+          text,
+          alignment: align || "left"
+        });
+      }
+    }],
+    to: []
+  }
 });
 
 /***/ },
@@ -144,12 +286,15 @@ __webpack_require__.r(__webpack_exports__);
   \*********************/
 (__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ save)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+
 
 
 function save({
@@ -158,15 +303,19 @@ function save({
   const {
     text,
     alignment,
+    blockAlignment,
     backgroundColor,
-    textColor
+    textColor,
+    shadow,
+    shadowOpacity
   } = attributes;
+  const classes = classnames__WEBPACK_IMPORTED_MODULE_2__(`text-box-align-${alignment}`, {
+    "has-shadow": shadow,
+    [`has-shadow-${shadowOpacity}`]: shadow && shadowOpacity,
+    [`block-align-${blockAlignment}`]: blockAlignment
+  });
   const blockProps = _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps.save({
-    className: `text-box-align-${alignment}`
-    // style: {
-    //     backgroundColor,
-    //     color: textColor,
-    // },
+    className: classes
   });
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText.Content, {
     ...blockProps,
@@ -183,6 +332,7 @@ function save({
   \************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 // extracted by mini-css-extract-plugin
 
@@ -195,6 +345,7 @@ __webpack_require__.r(__webpack_exports__);
   \*************************************/
 (module) {
 
+"use strict";
 module.exports = window["wp"]["blockEditor"];
 
 /***/ },
@@ -205,7 +356,19 @@ module.exports = window["wp"]["blockEditor"];
   \********************************/
 (module) {
 
+"use strict";
 module.exports = window["wp"]["blocks"];
+
+/***/ },
+
+/***/ "@wordpress/components"
+/*!************************************!*\
+  !*** external ["wp","components"] ***!
+  \************************************/
+(module) {
+
+"use strict";
+module.exports = window["wp"]["components"];
 
 /***/ },
 
@@ -215,6 +378,7 @@ module.exports = window["wp"]["blocks"];
   \******************************/
 (module) {
 
+"use strict";
 module.exports = window["wp"]["i18n"];
 
 /***/ },
@@ -225,6 +389,7 @@ module.exports = window["wp"]["i18n"];
   \************************/
 (module) {
 
+"use strict";
 module.exports = window["React"];
 
 /***/ }
